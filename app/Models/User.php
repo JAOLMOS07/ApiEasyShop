@@ -1,10 +1,14 @@
 <?php
 namespace App\Models;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Models\Product;
+use App\Models\Message;
+use App\Models\Chat;
+
+
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
@@ -33,6 +37,15 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
 
+    public function Products(){
+        return $this->hasMany(Product::class);
+    }
+    public function Messages(){
+        return $this->hasMany(Message::class);
+    }
+    public function Chats(){
+        return $this->belongsToMany(Chat::class);
+    }
 
     protected $casts = [
         'email_verified_at' => 'datetime',
